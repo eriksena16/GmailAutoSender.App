@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns:behaviors="clr-namespace:GmailAutoSender.App.Behaviors"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="GmailAutoSender.App.MainPage"
+    BackgroundColor="#F4F5FA"
+    Title="Gmail Auto Sender">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Cabeçalho -->
+        <Grid Grid.Row="0"
+              BackgroundColor="#17152B"
+              Padding="24,20"
+              ColumnDefinitions="Auto,*,Auto">
+
+            <Border
+                BackgroundColor="#7257F5"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 14"
+                WidthRequest="48"
+                HeightRequest="48"
+                VerticalOptions="Center">
+                <Label Text="✉"
+                       FontSize="27"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Border>
+
+            <VerticalStackLayout
+                Grid.Column="1"
+                Margin="14,0,0,0"
+                VerticalOptions="Center"
+                Spacing="3">
+                <Label Text="Gmail Auto Sender"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="White"/>
+                <Label Text="Prepare seus e-mails com praticidade"
+                       FontSize="12"
+                       TextColor="#B8B5D2"/>
+            </VerticalStackLayout>
+
+            <Border Grid.Column="2"
+                    BackgroundColor="#243C35"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="10,7"
+                    VerticalOptions="Center">
+                <Label Text="●  Modo seguro"
+                       FontSize="11"
+                       TextColor="#8DE0B5"/>
+            </Border>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                Padding="24"
+                Spacing="20"
+                MaximumWidthRequest="1100"
+                HorizontalOptions="Center">
+
+                <!-- Resumo -->
+                <Grid ColumnDefinitions="*,*,*"
+                      ColumnSpacing="12">
+
+                    <Border BackgroundColor="White"
+                            Stroke="#E5E7EF"
+                            StrokeShape="RoundRectangle 14"
+                            Padding="15">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="DESTINATÁRIOS"
+                                   FontSize="10"
+                                   TextColor="#77758D"/>
+                            <Label x:Name="RecipientCountLabel"
+                                   Text="0"
+                                   FontSize="27"
+                                   FontAttributes="Bold"
+                                   TextColor="#24213D"/>
+                            <Label Text="Importados"
+                                   FontSize="11"
+                                   TextColor="#77758D"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Column="1"
+                            BackgroundColor="White"
+                            Stroke="#E5E7EF"
+                            StrokeShape="RoundRectangle 14"
+                            Padding="15">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="ANEXOS"
+                                   FontSize="10"
+                                   TextColor="#77758D"/>
+                            <Label x:Name="AttachmentCountLabel"
+                                   Text="0"
+                                   FontSize="27"
+                                   FontAttributes="Bold"
+                                   TextColor="#24213D"/>
+                            <Label Text="Selecionados"
+                                   FontSize="11"
+                                   TextColor="#77758D"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Column="2"
+                            BackgroundColor="White"
+                            Stroke="#E5E7EF"
+                            StrokeShape="RoundRectangle 14"
+                            Padding="15">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="SEGURANÇA"
+                                   FontSize="10"
+                                   TextColor="#77758D"/>
+                            <Label Text="Ativa"
+                                   FontSize="23"
+                                   FontAttributes="Bold"
+                                   TextColor="#198754"/>
+                            <Label Text="Revisão manual"
+                                   FontSize="11"
+                                   TextColor="#77758D"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Destinatários -->
+                <Border BackgroundColor="White"
+                        Stroke="#E5E7EF"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="20">
+
+                    <VerticalStackLayout Spacing="13">
+                        <Label Text="01  ·  Destinatários"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#24213D"/>
+
+                        <Label Text="Importe uma lista CSV ou Excel com as colunas Name e Email."
+                               FontSize="12"
+                               TextColor="#77758D"/>
+
+                        <Grid ColumnDefinitions="*,Auto"
+                              ColumnSpacing="10">
+                            <Border BackgroundColor="#F7F6FF"
+                                    Stroke="#DDD8FF"
+                                    StrokeShape="RoundRectangle 10"
+                                    Padding="12">
+                                <Label x:Name="ImportStatusLabel"
+                                       Text="Nenhum arquivo importado"
+                                       FontSize="12"
+                                       TextColor="#5145A8"
+                                       VerticalOptions="Center"/>
+                            </Border>
+
+                            <Button Grid.Column="1"
+                                    Text="Importar lista"
+                                    Clicked="ImportRecipientsButton_Clicked"
+                                    BackgroundColor="#7257F5"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    Padding="15,10">
+
+                                <Button.Behaviors>
+                                    <behaviors:PressAnimationBehavior />
+                                </Button.Behaviors>
+
+                            </Button>
+                        </Grid>
+
+                        <CollectionView x:Name="RecipientsCollection"
+                                        HeightRequest="140"
+                                        SelectionMode="None">
+                            <CollectionView.EmptyView>
+                                <Label Text="Os destinatários aparecerão aqui."
+                                       TextColor="#9290A4"
+                                       FontSize="12"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </CollectionView.EmptyView>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,Auto"
+                                          Padding="8,6">
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="{Binding Name}"
+                                                   FontAttributes="Bold"
+                                                   FontSize="12"
+                                                   TextColor="#24213D"/>
+                                            <Label Text="{Binding Email}"
+                                                   FontSize="11"
+                                                   TextColor="#77758D"/>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Composição -->
+                <Border BackgroundColor="White"
+                        Stroke="#E5E7EF"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="20">
+
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="02  ·  Compor e-mail"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#24213D"/>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Destinatário de teste / individual"
+                                   FontSize="12"
+                                   FontAttributes="Bold"
+                                   TextColor="#514D6D"/>
+                            <Entry x:Name="RecipientEntry"
+                                   Placeholder="nome@empresa.com"
+                                   Keyboard="Email"
+                                   BackgroundColor="#F8F8FC"
+                                   TextColor="#24213D"/>
+                            <Label Text="Deixe vazio para usar os destinatários importados."
+                                   FontSize="11"
+                                   TextColor="#77758D"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Assunto"
+                                   FontSize="12"
+                                   FontAttributes="Bold"
+                                   TextColor="#514D6D"/>
+                            <Entry x:Name="SubjectEntry"
+                                   Text="Job Application – CV Attached"
+                                   Placeholder="Assunto do e-mail"
+                                   BackgroundColor="#F8F8FC"
+                                   TextColor="#24213D"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Mensagem"
+                                   FontSize="12"
+                                   FontAttributes="Bold"
+                                   TextColor="#514D6D"/>
+                            <Editor x:Name="BodyEditor"
+                                    HeightRequest="155"
+                                    AutoSize="Disabled"
+                                    BackgroundColor="#F8F8FC"
+                                    TextColor="#24213D"
+                                    Placeholder="Escreva o corpo do e-mail..."
+                                    Text="Hi,&#10;&#10;I’m currently looking for job opportunities in Cork and would love to join your team. I’m reliable, hardworking, quick to learn, and ready to contribute wherever needed.&#10;&#10;Please find my CV attached. I’d welcome the opportunity to discuss how I could support your team.&#10;&#10;Kind regards,&#10;Erik Sena "/>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Anexos -->
+                <Border BackgroundColor="White"
+                        Stroke="#E5E7EF"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="20">
+
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="03  ·  Arquivos anexados"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#24213D"/>
+
+                        <Label Text="Selecione um ou mais arquivos. Pelo menos um anexo é obrigatório."
+                               FontSize="12"
+                               TextColor="#77758D"/>
+
+                        <Button Text="+  Selecionar arquivos"
+                                Clicked="SelectAttachmentsButton_Clicked"
+                                BackgroundColor="#F0EDFF"
+                                TextColor="#5145A8"
+                                CornerRadius="10"
+                                HorizontalOptions="Start">
+
+                            <Button.Behaviors>
+                                <behaviors:PressAnimationBehavior />
+                            </Button.Behaviors>
+
+                        </Button>
+
+                        <CollectionView x:Name="AttachmentsCollection"
+                                        HeightRequest="120"
+                                        SelectionMode="Single"
+                                        SelectionChanged="AttachmentsCollection_SelectionChanged">
+                            <CollectionView.EmptyView>
+                                <Label Text="Nenhum anexo selecionado."
+                                       TextColor="#9290A4"
+                                       FontSize="12"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </CollectionView.EmptyView>
+
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="Auto,*,Auto"
+                                          Padding="8,6"
+                                          ColumnSpacing="10">
+
+                                        <Label Text="📎"
+                                               FontSize="19"
+                                               VerticalOptions="Center"/>
+
+                                        <Label Grid.Column="1"
+                                               Text="{Binding FileName}"
+                                               FontSize="12"
+                                               TextColor="#24213D"
+                                               VerticalOptions="Center"
+                                               LineBreakMode="MiddleTruncation"/>
+
+                                        <Button Grid.Column="2"
+                                                Text="Remover"
+                                                FontSize="11"
+                                                Padding="8,4"
+                                                BackgroundColor="#FDECEC"
+                                                TextColor="#B42318"
+                                                CornerRadius="8"
+                                                Clicked="RemoveAttachmentButton_Clicked"
+                                                CommandParameter="{Binding .}">
+                                            
+                                            <Button.Behaviors>
+                                                <behaviors:PressAnimationBehavior />
+                                            </Button.Behaviors>
+
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Execução -->
+                <Border BackgroundColor="#ECE9FF"
+                        Stroke="#D9D2FF"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="20">
+
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="04  ·  Revisar e preparar"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#30265F"/>
+
+                        <Label Text="A aplicação criará um rascunho individual para cada destinatário. Nenhum e-mail será enviado automaticamente."
+                               FontSize="12"
+                               TextColor="#514D6D"/>
+
+                        <Button x:Name="CreateDraftsButton"
+                                Text="Criar rascunhos no Gmail"
+                                Clicked="CreateDraftButton_Clicked"
+                                BackgroundColor="#7257F5"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="15"
+                                CornerRadius="12"
+                                HeightRequest="52">
+
+                            <Button.Behaviors>
+                                <behaviors:PressAnimationBehavior />
+                            </Button.Behaviors>
+                        </Button>
+
+                        <ActivityIndicator x:Name="BusyIndicator"
+                                           IsRunning="False"
+                                           IsVisible="False"
+                                           Color="#7257F5"/>
+
+                        <Label x:Name="StatusLabel"
+                               Text="Pronto para começar."
+                               FontSize="12"
+                               TextColor="#514D6D"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -275,6 +275,14 @@ ServiceFabricBackup/
 *- [Bb]ackup ([0-9]).rdl
 *- [Bb]ackup ([0-9][0-9]).rdl
 
+# Google OAuth credentials
+credentials.json
+**/credentials.json
+
+# OAuth tokens
+**/OAuth/
+**/token.json
+
 # Microsoft Fakes
 FakesAssemblies/
 

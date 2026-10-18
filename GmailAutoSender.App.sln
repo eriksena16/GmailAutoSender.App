@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37411.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailAutoSender.App", "GmailAutoSender.App\GmailAutoSender.App.csproj", "{E6DF4AC4-D9E4-4553-ADA5-78B011DE7AE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailAutoSender.Core", "GmailAutoSender.Core\GmailAutoSender.Core.csproj", "{830610CB-C5F7-4D82-B1B1-6935B2D7AC23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailAutoSender.Infrastructure", "GmailAutoSender.Infrastructure\GmailAutoSender.Infrastructure.csproj", "{7C27360D-C294-4F66-B113-8E3E25F6E2FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E6DF4AC4-D9E4-4553-ADA5-78B011DE7AE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6DF4AC4-D9E4-4553-ADA5-78B011DE7AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6DF4AC4-D9E4-4553-ADA5-78B011DE7AE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6DF4AC4-D9E4-4553-ADA5-78B011DE7AE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{830610CB-C5F7-4D82-B1B1-6935B2D7AC23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{830610CB-C5F7-4D82-B1B1-6935B2D7AC23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{830610CB-C5F7-4D82-B1B1-6935B2D7AC23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{830610CB-C5F7-4D82-B1B1-6935B2D7AC23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C27360D-C294-4F66-B113-8E3E25F6E2FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C27360D-C294-4F66-B113-8E3E25F6E2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C27360D-C294-4F66-B113-8E3E25F6E2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C27360D-C294-4F66-B113-8E3E25F6E2FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E63A89B9-F681-478D-B0B3-B99EB2F3DA49}
+	EndGlobalSection
+EndGlobal
